@@ -1,4 +1,4 @@
-#include <iostream>
+#include <stdio.h>
 
 class Complex {
 public:
@@ -23,7 +23,7 @@ public:
     }
 
     void print() const {
-        std::cout << real << " + " << imag << "i" << std::endl;
+        printf("%.0f + %.0fi\n", real, imag);
     }
 };
 
@@ -45,27 +45,27 @@ int main() {
 
     // 1. 일반 함수(void, 참조 전달) 검증
     addVoid(a, b, c);
-    std::cout << "일반 함수(void, 참조 전달): ";
+    printf("일반 함수(void, 참조 전달): ");
     c.print(); // 기대 출력: 4 + 6i
 
     // 2. 일반 함수(return, 값 전달) 검증
     c = addReturn(a, b);
-    std::cout << "일반 함수(return, 값 전달): ";
+    printf("일반 함수(return, 값 전달): ");
     c.print(); // 기대 출력: 4 + 6i
 
     // 3. 멤버 함수(void, 참조 전달) 검증
     a.addMemberVoid(b, c);
-    std::cout << "멤버 함수(void, 참조 전달): ";
+    printf("멤버 함수(void, 참조 전달): ");
     c.print(); // 기대 출력: 4 + 6i
 
     // 4. 멤버 함수(return, 참조 전달) 검증
     c = a.addMemberReturn(b);
-    std::cout << "멤버 함수(return, 참조 전달): ";
+    printf("멤버 함수(return, 참조 전달): ");
     c.print(); // 기대 출력: 4 + 6i
 
     // 5. 연산자 오버로딩 검증
     c = a + b;
-    std::cout << "연산자 오버로딩: ";
+    printf("연산자 오버로딩: ");
     c.print(); // 기대 출력: 4 + 6i
 
     return 0;
