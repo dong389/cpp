@@ -1,39 +1,46 @@
 #pragma once
-#include "Canvas.h"
+#include <iostream>
+#include <string>
+#include <algorithm> // std::max 사용을 위해 추가
 #define DIM 40
 
-class Monster {
-    string name, icon;    // 몬스터의 이름과 아이콘
-    int x, y, nItem;      // 몬스터의 위치와 먹은 아이템 개수
-    int nEnergy;          // 몬스터의 에너지
+using namespace std;
 
-    void clip(int maxx, int maxy) {
+class Monster {
+    string name, icon;      // 몬스터 이름과 화면 출력용 아이콘
+    int x, y;               // 현재 위치
+    int nItem;              // 먹은 아이템 개수
+    int nEnergy;            // 에너지 (추가)
+
+    void clip(int maxx, int maxy) { // 맵의 경계를 넘지 않도록 제한
         if (x < 0) x = 0;
         if (x >= maxx) x = maxx - 1;
         if (y < 0) y = 0;
         if (y >= maxy) y = maxy - 1;
     }
-    void eat(int map[DIM][DIM]) {
-        if (map[y][x] == 1) {
+
+    void eat(int map[DIM][DIM]) { // 아이템을 먹거나 실패할 때 처리
+        if (map[y][x] == 1) {     // 아이템이 있는 경우
             map[y][x] = 0;
             nItem++;
-            nEnergy += 8;  // 아이템을 먹으면 에너지가 8 증가
-        } else {
-            nEnergy -= 1;  // 아이템을 먹지 못하면 에너지가 1 감소
-            if (nEnergy < 0) nEnergy = 0;  // 에너지의 최솟값은 0
+            nEnergy += 8;         // 에너지를 8 증가
+        } else {                  // 아이템이 없는 경우
+            nEnergy = max(0, nEnergy - 1); // 에너지를 1 감소 (최소값 0)
         }
     }
+
 public:
-    Monster(string n = "Monster", string i = "X", int px = 0, int py = 0)
-        : name(n), icon(i), x(px), y(py), nItem(0), nEnergy(100) {}  // 에너지는 100으로 초기화
+    Monster(string n = "Monster", string i = "M", int px = 0, int py = 0)
+        : name(n), icon(i), x(px), y(py), nItem(0), nEnergy(100) {}
 
-    Monster(const Monster& other)  // 복사 생성자 추가
-        : name(other.name), icon(other.icon), x(other.x), y(other.y), 
-          nItem(other.nItem), nEnergy(other.nEnergy) {}
+    ~Monster() {
+        cout << "\t" << name << " " << icon << " 소멸되었습니다~\n"; // 중복 제거
+    }
 
-    ~Monster() { cout << "\t" << name << icon << "가 사라졌습니다.\n"; }
+    void draw(Canvas& canvas) {
+        canvas.draw(x, y, icon);
+    }
 
-    void draw(Canvas &canvas) { canvas.draw(x, y, icon); }
     void move(int map[DIM][DIM], int maxx, int maxy) {
         switch (rand() % 8) {
         case 0: y--; break;
@@ -48,7 +55,10 @@ public:
         clip(maxx, maxy);
         eat(map);
     }
-    void print() { 
-        cout << "\t" << name << icon << ": " << nItem << "개 아이템, 에너지: " << nEnergy << endl; 
+
+    void print() {
+        cout << "\t" << name << icon 
+             << ": 아이템=" << nItem 
+             << ", 에너지=" << nEnergy << endl;
     }
 };

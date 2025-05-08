@@ -1,7 +1,7 @@
 #pragma once
 #include "Canvas.h"
 #include "Monster.h"
-#include <windows.h>
+#include <unistd.h>
 #define DIM  40
 #define MAXMONS 5
 
@@ -24,13 +24,13 @@ class MonsterWorld {
 		canvas.clear();
 		for (int y = 0; y < yMax; y++)
 			for (int x = 0; x < xMax; x++)
-				if (Map(x, y) > 0) canvas.draw(x, y, "¡á");
+				if (Map(x, y) > 0) canvas.draw(x, y, "ï¿½ï¿½");
 		for (int i = 0; i < nMon; i++)
 			mon[i].draw(canvas);
-		canvas.print("[ Monster World (¸ó½ºÅÍµéÀÇ ¼¼»ó) ]");
+		canvas.print("[ Monster World (ï¿½ï¿½ï¿½Íµï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½) ]");
 
-		cerr << " ÀüÃ¼ ÀÌµ¿ È½¼ö = " << nMove << endl;
-		cerr << " ³²Àº ¾ÆÀÌÅÛ ¼ö = " << countItems() << endl;
+		cerr << " ï¿½ï¿½Ã¼ ï¿½Ìµï¿½ È½ï¿½ï¿½ = " << nMove << endl;
+		cerr << " ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ = " << countItems() << endl;
 		for (int i = 0; i < nMon; i++)
 			mon[i].print();
 	}
@@ -47,7 +47,7 @@ public:
 	}
 	void play(int maxwalk, int wait) {
 		print();
-		cerr << " ¿£ÅÍ¸¦ ´©¸£¼¼¿ä...";
+		cerr << " ï¿½ï¿½ï¿½Í¸ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½...";
 		getchar();
 		for (int i = 0; i < maxwalk; i++) {
 			for (int k = 0; k < nMon; k++)
@@ -55,7 +55,7 @@ public:
 			nMove++;
 			print();
 			if (isDone()) break;
-			Sleep(wait);
+			usleep(wait * 100000);
 		}
 	}
 };
