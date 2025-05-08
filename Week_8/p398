@@ -1,0 +1,39 @@
+(1) Sample 객체의 개수를 관리하는 정적 변수 count와 출력 함수 printcount() 구현
+정적 변수 count를 추가하여 객체 수를 추적하고, printcount()를 통해 현재 객체 수를 출력합니다. count는 객체 생성 시 증가하고, 소멸 시 감소하도록 합니다.
+
+class Sample {
+    static int count; // 정적 변수
+    char *name;
+public:
+    Sample() { count++; }
+    Sample(const char *name) { count++; }
+    static void printcount() { 
+        std::cout << "Current number of Sample objects: " << count << std::endl; 
+    }
+    // 소멸자 (3번에서 구현)
+};
+int count = 0; // 정적 변수 초기화
+------------------------------------------------
+(2) 생성자 Sample(const char* name)에서 name을 this와 new 키워드로 초기화
+
+Sample(const char *name) {
+    this->name = new char[strlen(name) + 1]; // 널 종료 문자 포함
+    strcpy(this->name, name);
+    count++;
+}
+------------------------------------------------
+(3)소멸자 ~Sample() 구현
+
+~Sample() {
+    delete[] name; // 동적 메모리 해제
+    count--;
+}
+-------------------------------------------------
+(4)클래스 Sample의 복사 생성자 구현
+
+Sample(const Sample &other) {
+    name = new char[strlen(other.name) + 1];
+    strcpy(name, other.name);
+    count++;
+}
+-------------------------------------------------
