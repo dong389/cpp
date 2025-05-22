@@ -1,0 +1,15 @@
+(1)이 프로그램의 출력 결과를 적어라
+1번 sample
+1번 sample
+1번 sample
+1번 sample
+(2)6행 play() 함수를 가상 함수로 수정한다면 어떤 결과가 출력될지 예상하라
+1번 sample
+2번 sample
+3번 sample
+4번 sample
+(3)6행 play()가 가상 함수라고 하자. 이코드에서 만약 main()의 배열 arr의 자료형이 Sample1*가 아니라 Sample2*일 때 출력 결과를 예상하라.
+1번 sample
+2번 sample
+3번 sample
+4번 sample
